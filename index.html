@@ -1,0 +1,115 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Text To Word</title></head><body><p>&lt;!DOCTYPE html&gt;</p>
+<p>&lt;html lang="en"&gt;</p>
+<p>&lt;head&gt;</p>
+<p>&nbsp; &lt;meta charset="UTF-8" /&gt;</p>
+<p>&nbsp; &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</p>
+<p>&nbsp; &lt;title&gt;Mini Puzzle Game&lt;/title&gt;</p>
+<p>&nbsp; &lt;style&gt;</p>
+<p>&nbsp; &nbsp; body {</p>
+<p>&nbsp; &nbsp; &nbsp; margin: 0;</p>
+<p>&nbsp; &nbsp; &nbsp; font-family: sans-serif;</p>
+<p>&nbsp; &nbsp; &nbsp; background: #f2f2f2;</p>
+<p>&nbsp; &nbsp; &nbsp; display: flex;</p>
+<p>&nbsp; &nbsp; &nbsp; justify-content: center;</p>
+<p>&nbsp; &nbsp; &nbsp; align-items: center;</p>
+<p>&nbsp; &nbsp; &nbsp; flex-direction: column;</p>
+<p>&nbsp; &nbsp; &nbsp; height: 100vh;</p>
+<p>&nbsp; &nbsp; }</p>
+<p>&nbsp; &nbsp; .container {</p>
+<p>&nbsp; &nbsp; &nbsp; text-align: center;</p>
+<p>&nbsp; &nbsp; }</p>
+<p>&nbsp; &nbsp; .home, .level {</p>
+<p>&nbsp; &nbsp; &nbsp; display: none;</p>
+<p>&nbsp; &nbsp; }</p>
+<p>&nbsp; &nbsp; .active {</p>
+<p>&nbsp; &nbsp; &nbsp; display: block;</p>
+<p>&nbsp; &nbsp; }</p>
+<p>&nbsp; &nbsp; .level-grid {</p>
+<p>&nbsp; &nbsp; &nbsp; display: grid;</p>
+<p>&nbsp; &nbsp; &nbsp; grid-template-columns: repeat(10, 1fr);</p>
+<p>&nbsp; &nbsp; &nbsp; gap: 10px;</p>
+<p>&nbsp; &nbsp; &nbsp; margin-top: 20px;</p>
+<p>&nbsp; &nbsp; }</p>
+<p>&nbsp; &nbsp; .level-button {</p>
+<p>&nbsp; &nbsp; &nbsp; padding: 10px;</p>
+<p>&nbsp; &nbsp; &nbsp; background: #4CAF50;</p>
+<p>&nbsp; &nbsp; &nbsp; color: white;</p>
+<p>&nbsp; &nbsp; &nbsp; border: none;</p>
+<p>&nbsp; &nbsp; &nbsp; cursor: pointer;</p>
+<p>&nbsp; &nbsp; &nbsp; border-radius: 5px;</p>
+<p>&nbsp; &nbsp; }</p>
+<p>&nbsp; &nbsp; .level-button:hover {</p>
+<p>&nbsp; &nbsp; &nbsp; background: #45a049;</p>
+<p>&nbsp; &nbsp; }</p>
+<p>&nbsp; &nbsp; .back-button {</p>
+<p>&nbsp; &nbsp; &nbsp; margin-top: 20px;</p>
+<p>&nbsp; &nbsp; &nbsp; padding: 8px 16px;</p>
+<p>&nbsp; &nbsp; &nbsp; background: #555;</p>
+<p>&nbsp; &nbsp; &nbsp; color: white;</p>
+<p>&nbsp; &nbsp; &nbsp; border: none;</p>
+<p>&nbsp; &nbsp; &nbsp; border-radius: 4px;</p>
+<p>&nbsp; &nbsp; &nbsp; cursor: pointer;</p>
+<p>&nbsp; &nbsp; }</p>
+<p>&nbsp; &lt;/style&gt;</p>
+<p>&lt;/head&gt;</p>
+<p>&lt;body&gt;</p>
+<p>&nbsp; &lt;div class="container"&gt;</p>
+<p>&nbsp; &nbsp; &lt;div id="home" class="home active"&gt;</p>
+<p>&nbsp; &nbsp; &nbsp; &lt;h1&gt;Welcome to the Puzzle Game&lt;/h1&gt;</p>
+<p>&nbsp; &nbsp; &nbsp; &lt;p&gt;Challenge yourself with 100 levels of fun!&lt;/p&gt;</p>
+<p>&nbsp; &nbsp; &nbsp; &lt;div class="level-grid" id="levelGrid"&gt;&lt;/div&gt;</p>
+<p>&nbsp; &nbsp; &lt;/div&gt;</p>
+<p>&nbsp;</p>
+<p>&nbsp; &nbsp; &lt;div id="level" class="level"&gt;</p>
+<p>&nbsp; &nbsp; &nbsp; &lt;h2 id="levelTitle"&gt;Level&lt;/h2&gt;</p>
+<p>&nbsp; &nbsp; &nbsp; &lt;p&gt;Solve this simple puzzle: What is 2 + 2?&lt;/p&gt;</p>
+<p>&nbsp; &nbsp; &nbsp; &lt;input type="text" id="answer" placeholder="Enter your answer" /&gt;</p>
+<p>&nbsp; &nbsp; &nbsp; &lt;button onclick="submitAnswer()"&gt;Submit&lt;/button&gt;</p>
+<p>&nbsp; &nbsp; &nbsp; &lt;p id="feedback"&gt;&lt;/p&gt;</p>
+<p>&nbsp; &nbsp; &nbsp; &lt;button class="back-button" onclick="goBack()"&gt;Back to Levels&lt;/button&gt;</p>
+<p>&nbsp; &nbsp; &lt;/div&gt;</p>
+<p>&nbsp; &lt;/div&gt;</p>
+<p>&nbsp;</p>
+<p>&nbsp; &lt;script&gt;</p>
+<p>&nbsp; &nbsp; const levelGrid = document.getElementById("levelGrid");</p>
+<p>&nbsp; &nbsp; const home = document.getElementById("home");</p>
+<p>&nbsp; &nbsp; const level = document.getElementById("level");</p>
+<p>&nbsp; &nbsp; const levelTitle = document.getElementById("levelTitle");</p>
+<p>&nbsp; &nbsp; const feedback = document.getElementById("feedback");</p>
+<p>&nbsp; &nbsp; const answerInput = document.getElementById("answer");</p>
+<p>&nbsp; &nbsp; let currentLevel = 1;</p>
+<p>&nbsp;</p>
+<p>&nbsp; &nbsp; // Create 100 level buttons</p>
+<p>&nbsp; &nbsp; for (let i = 1; i &lt;= 100; i++) {</p>
+<p>&nbsp; &nbsp; &nbsp; const btn = document.createElement("button");</p>
+<p>&nbsp; &nbsp; &nbsp; btn.className = "level-button";</p>
+<p>&nbsp; &nbsp; &nbsp; btn.textContent = `Level ${i}`;</p>
+<p>&nbsp; &nbsp; &nbsp; btn.onclick = () =&gt; startLevel(i);</p>
+<p>&nbsp; &nbsp; &nbsp; levelGrid.appendChild(btn);</p>
+<p>&nbsp; &nbsp; }</p>
+<p>&nbsp;</p>
+<p>&nbsp; &nbsp; function startLevel(levelNum) {</p>
+<p>&nbsp; &nbsp; &nbsp; currentLevel = levelNum;</p>
+<p>&nbsp; &nbsp; &nbsp; levelTitle.textContent = `Level ${levelNum}`;</p>
+<p>&nbsp; &nbsp; &nbsp; home.classList.remove("active");</p>
+<p>&nbsp; &nbsp; &nbsp; level.classList.add("active");</p>
+<p>&nbsp; &nbsp; &nbsp; feedback.textContent = "";</p>
+<p>&nbsp; &nbsp; &nbsp; answerInput.value = "";</p>
+<p>&nbsp; &nbsp; }</p>
+<p>&nbsp;</p>
+<p>&nbsp; &nbsp; function submitAnswer() {</p>
+<p>&nbsp; &nbsp; &nbsp; const userAnswer = answerInput.value.trim();</p>
+<p>&nbsp; &nbsp; &nbsp; if (userAnswer === "4") {</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; feedback.textContent = `Correct! Level ${currentLevel} passed!`;</p>
+<p>&nbsp; &nbsp; &nbsp; } else {</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; feedback.textContent = "Try again.";</p>
+<p>&nbsp; &nbsp; &nbsp; }</p>
+<p>&nbsp; &nbsp; }</p>
+<p>&nbsp;</p>
+<p>&nbsp; &nbsp; function goBack() {</p>
+<p>&nbsp; &nbsp; &nbsp; home.classList.add("active");</p>
+<p>&nbsp; &nbsp; &nbsp; level.classList.remove("active");</p>
+<p>&nbsp; &nbsp; }</p>
+<p>&nbsp; &lt;/script&gt;</p>
+<p>&lt;/body&gt;</p>
+<p>&lt;/html&gt;</p></body></html>
